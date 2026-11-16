@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f7f2" />
+    <title>GoodLedger — Your money, in good shape</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Main navigation">
+        <a class="brand" href="#overview" aria-label="GoodLedger home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>good<span class="brand-light">ledger</span></span>
+        </a>
+        <div class="nav-label">WORKSPACE</div>
+        <nav class="primary-nav">
+          <a class="nav-link active" href="#overview" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="11" width="7" height="10" rx="1.5"/><rect x="3" y="14" width="8" height="7" rx="1.5"/></svg>Overview</a>
+          <a class="nav-link" href="#transactions"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="18" cy="18" r="3"/></svg>Transactions</a>
+          <a class="nav-link" href="#budgets"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5m0 14h16M8 16v-4m4 4V8m4 8v-6m4 6V4"/></svg>Budgets</a>
+        </nav>
+        <section class="account-card" aria-label="Account balance">
+          <div class="account-card-top"><span>YOUR ACCOUNTS</span><button class="icon-button tiny" id="add-account" aria-label="Add an account" title="Add account">+</button></div>
+          <div class="account-total" id="account-total">₹0</div>
+          <div class="account-caption">total net position</div>
+          <div class="account-list" id="account-list"></div>
+        </section>
+        <div class="sidebar-bottom"><span class="privacy-dot"></span><span>Your data stays on this device</span></div>
+      </aside>
+
+      <main class="main-content" id="overview">
+        <header class="topbar">
+          <div class="breadcrumbs"><span>Personal</span><span class="crumb-slash">/</span><strong>Overview</strong></div>
+          <div class="topbar-actions">
+            <button class="text-button" id="export-csv" title="Download all transactions as CSV"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/></svg><span>Export</span></button>
+            <button class="avatar" aria-label="Signed in as Maya">M</button>
+          </div>
+        </header>
+        <div class="content-wrap">
+          <section class="welcome-row">
+            <div><div class="eyebrow" id="today-label">MONDAY, NOVEMBER 16</div><h1>Your money, <em>in good shape.</em></h1><p class="welcome-note">A little clarity goes a long way.</p></div>
+            <button class="primary-button" id="open-transaction"><span class="plus-icon" aria-hidden="true">+</span><span>Add transaction</span><kbd>N</kbd></button>
+          </section>
+          <section class="month-strip" aria-label="Selected month">
+            <div class="month-nav"><button class="icon-button" id="previous-month" aria-label="Previous month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><h2 id="month-title">November 2026</h2><button class="icon-button" id="next-month" aria-label="Next month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div>
+            <span class="month-hint">MONTHLY OVERVIEW</span>
+          </section>
+          <section class="stat-grid" aria-label="Monthly totals">
+            <article class="stat-card"><div class="stat-heading"><span>Income</span><span class="stat-icon income-icon" aria-hidden="true">↗</span></div><div class="stat-value" id="income-total">₹0</div><div class="stat-foot"><span class="stat-dot green"></span><span>Money in this month</span></div></article>
+            <article class="stat-card"><div class="stat-heading"><span>Spent</span><span class="stat-icon expense-icon" aria-hidden="true">↘</span></div><div class="stat-value" id="expense-total">₹0</div><div class="stat-foot"><span class="stat-dot coral"></span><span>Money out this month</span></div></article>
+            <article class="stat-card savings-card"><div class="stat-heading"><span>Net savings</span><span class="stat-icon savings-icon" aria-hidden="true">✳</span></div><div class="stat-value" id="savings-total">₹0</div><div class="stat-foot"><span class="stat-dot blue"></span><span id="savings-caption">Income minus spending</span></div></article>
+          </section>
+          <section class="insights-grid">
+            <article class="panel trend-panel"><div class="panel-heading"><div><div class="panel-kicker">THE BIG PICTURE</div><h2>Income & spending</h2></div><div class="chart-legend"><span><i class="legend-income"></i>Income</span><span><i class="legend-spent"></i>Spent</span></div></div><div class="trend-chart" id="trend-chart" aria-label="Income and spending for the last six months"></div></article>
+            <article class="panel breakdown-panel"><div class="panel-heading"><div><div class="panel-kicker">WHERE IT GOES</div><h2>Spending by category</h2></div></div><div class="breakdown-content"><div class="donut" id="category-donut" role="img" aria-label="Spending by category"><div class="donut-center"><strong id="donut-total">₹0</strong><span>spent</span></div></div><div class="category-legend" id="category-legend"></div></div></article>
+          </section>
+          <section class="panel budgets-panel" id="budgets"><div class="panel-heading budget-heading"><div><div class="panel-kicker">A LITTLE GUARDRAIL</div><h2>Monthly budgets</h2></div><button class="subtle-button" id="edit-budgets">Edit budgets <span aria-hidden="true">↗</span></button></div><div class="budget-grid" id="budget-grid"></div></section>
+          <section class="panel transactions-panel" id="transactions">
+            <div class="panel-heading transaction-heading"><div><div class="panel-kicker">THE PAPER TRAIL</div><h2>Recent transactions</h2></div><label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4 4"/></svg><input type="search" id="transaction-search" placeholder="Search transactions" aria-label="Search transactions" /><kbd>/</kbd></label></div>
+            <div class="table-scroll"><table><thead><tr><th>TRANSACTION</th><th>CATEGORY</th><th>DATE</th><th>ACCOUNT</th><th class="amount-head">AMOUNT</th><th><span class="sr-only">Actions</span></th></tr></thead><tbody id="transaction-list"></tbody></table><div class="empty-state" id="empty-state" hidden><span class="empty-mark">✳</span><strong>Nothing to see here yet</strong><span>Try another search, or add your first transaction.</span></div></div>
+            <div class="table-footer"><span id="transaction-count">Showing 0 transactions</span><button class="subtle-button" id="show-all">View all <span aria-hidden="true">→</span></button></div>
+          </section>
+          <footer class="page-footer"><span>GOODLEDGER <i>·</i> MONEY, MADE CLEAR</span><button id="reset-demo">Reset demo data</button></footer>
+        </div>
+      </main>
+    </div>
+    <dialog class="transaction-dialog" id="transaction-dialog" aria-labelledby="dialog-title">
+      <form id="transaction-form"><div class="dialog-header"><div><div class="panel-kicker">QUICK ENTRY</div><h2 id="dialog-title">Add transaction</h2></div><button type="button" class="icon-button" id="close-dialog" aria-label="Close dialog">×</button></div>
+        <div class="type-switch" role="group" aria-label="Transaction type"><button type="button" class="type-option active" data-type="expense">Expense</button><button type="button" class="type-option" data-type="income">Income</button></div>
+        <label class="field-label" for="amount">Amount</label><div class="amount-input"><span>₹</span><input id="amount" name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required inputmode="decimal" /></div>
+        <div class="form-row"><label class="field-label">Category<select id="category" name="category" required></select></label><label class="field-label">Account<select id="account" name="account" required></select></label></div>
+        <div class="form-row"><label class="field-label">Date<input id="date" name="date" type="date" required /></label><label class="field-label">Note<input id="note" name="note" type="text" placeholder="Add a note" maxlength="80" /></label></div>
+        <div class="dialog-actions"><button type="button" class="cancel-button" id="cancel-dialog">Cancel</button><button type="submit" class="primary-button">Save transaction <span aria-hidden="true">↗</span></button></div>
+      </form>
+    </dialog>
+    <dialog class="simple-dialog" id="budget-dialog" aria-labelledby="budget-dialog-title"><form id="budget-form"><div class="dialog-header"><div><div class="panel-kicker">MONTHLY LIMITS</div><h2 id="budget-dialog-title">Adjust budgets</h2></div><button type="button" class="icon-button" data-close-budget aria-label="Close dialog">×</button></div><p class="dialog-copy">Set a spending limit for the categories that matter to you.</p><div id="budget-fields" class="budget-fields"></div><div class="dialog-actions"><button type="button" class="cancel-button" data-close-budget>Cancel</button><button type="submit" class="primary-button">Save budgets <span aria-hidden="true">↗</span></button></div></form></dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
